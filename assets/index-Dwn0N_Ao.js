@@ -1,0 +1,19 @@
+import{j as p,r as a,e as T,g as i}from"./index-viK6OPoB.js";import{a5 as f}from"./MacroContext-fPQEzlrA.js";import"./monaco-editor-7E23JaOL.js";const k=()=>{if(!document.getElementById("webamp-css-preload")){const s=document.createElement("link");s.id="webamp-css-preload",s.rel="stylesheet",s.href="https://unpkg.com/webamp@1.5.0/built/webamp.css",document.head.appendChild(s)}},S=()=>{const s=a.useRef(null),[o,w]=a.useState(!1),[m,v]=a.useState([]),u=a.useRef(null),c=a.useRef([]),h=T(e=>e.setOpen),y=T(e=>e.minimize);a.useEffect(()=>{if(k(),!window.Webamp&&!document.getElementById("webamp-script")){const e=document.createElement("script");e.id="webamp-script",e.src="https://unpkg.com/webamp@1.5.0/built/webamp.bundle.min.js",e.async=!0,e.onload=()=>w(!0),document.body.appendChild(e)}else window.Webamp&&w(!0)},[]),a.useEffect(()=>()=>{c.current.forEach(e=>e()),c.current=[]},[]),a.useEffect(()=>{if(o&&s.current&&!u.current)try{const x={zIndex:1e3,initialTracks:m.length>0?m:[{metaData:{artist:"DJ Mike Llama",title:"Llama Whippin' Intro"},url:"https://cdn.jsdelivr.net/gh/captbaritone/webamp@43434d82/mp3/llama-2.91.mp3",duration:5.322286}]},t=new window.Webamp(x);u.current=t;const d=t.onClose(()=>{h("webamp",!1)}),b=t.onMinimize(()=>{y("webamp",!0)}),C=t.onTrackDidChange(n=>{if(n!=null&&n.metaData){const{artist:l,title:r}=n.metaData;i.emit("webamp:trackChanged",n,l,r)}});c.current.push(d,b,C),window.WebampGlobal=t,t.renderWhenReady(s.current);const D=i.subscribe("webamp:play",()=>t.play()),R=i.subscribe("webamp:pause",()=>t.pause()),z=i.subscribe("webamp:stop",()=>t.stop()),U=i.subscribe("webamp:next",()=>{const n=t.store.getState(),l=n.playlist||{},r=n.tracks||[],E=l.currentTrack||0;E<r.length-1&&t.store.dispatch({type:"SET_CURRENT_TRACK",trackId:E+1})}),j=i.subscribe("webamp:prev",()=>{const r=(t.store.getState().playlist||{}).currentTrack||0;r>0&&t.store.dispatch({type:"SET_CURRENT_TRACK",trackId:r-1})}),I=i.subscribe("webamp:loadTrack",(n,l,r)=>{t.setTracksToPlay([{url:n,metaData:{artist:r,title:l}}])});return c.current.push(D,R,z,I,U,j),()=>{try{c.current.forEach(n=>n()),c.current=[],t.dispose(),delete window.WebampGlobal,u.current=null}catch(n){console.error("Error disposing Webamp:",n)}}}catch(e){console.error("Error initializing Webamp:",e)}},[o,h,y]),a.useEffect(()=>{m.length>0&&u.current&&u.current.setTracksToPlay(m)},[m]);const W=a.useCallback(e=>{e.preventDefault();const t=Array.from(e.dataTransfer.files).filter(d=>d.type.startsWith("audio/"));if(t.length>0){const d=t.map(b=>({blob:b,metaData:{title:b.name.replace(/\.[^/.]+$/,"")}}));v(d)}},[]),g=f.frameless===!0;return p.jsx("div",{className:`h-full w-full flex flex-col items-center justify-center ${g?"":"bg-gray-800 text-white overflow-hidden"}`,style:g?{backgroundColor:"transparent"}:{},onDrop:W,onDragOver:e=>e.preventDefault(),children:o?p.jsx("div",{className:"w-full h-full",ref:s}):p.jsxs("div",{className:"text-center p-4",children:[p.jsx("div",{className:"animate-spin h-8 w-8 border-t-2 border-blue-500 rounded-full mx-auto mb-4"}),p.jsx("p",{children:"Loading Webamp..."})]})})},F={id:f.id,manifest:f,init:async()=>{console.log("Webamp plugin initialized");const s=document.createElement("style");s.id="webamp-global-styles",s.innerHTML=`
+      #webamp {
+        position: relative;
+        z-index: 50;
+      }
+      .webamp-context-menu {
+        z-index: 1000;
+      }
+      /* Disable theme window pseudo-element in Webamp container */
+      #webamp .window::before {
+        display: none !important;
+      }
+
+      /* Fix equalizer-top sizing under Win7 theme */
+      .theme-win7 #webamp .equalizer-top {
+        height: 0px !important;
+        width: 0px !important;
+      }
+    `,document.head.appendChild(s),k()},onDestroy:()=>{const s=document.getElementById("webamp-global-styles");s&&s.remove();const o=document.getElementById("webamp-css-preload");o&&o.remove()},render:()=>p.jsx(S,{})};export{F as default};
