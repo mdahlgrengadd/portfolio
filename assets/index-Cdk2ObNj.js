@@ -1,0 +1,1 @@
+import{j as t}from"./index-DSgK4ghx.js";import{m as a,ad as i}from"./MacroContext-SD-rRo2_.js";import"./monaco-editor-DkIPtwFA.js";let s;const e={id:a.id,manifest:a,init:async t=>{s=t},onOpen:t=>{t&&(s=t)},render:()=>t.jsx("div",{className:"text-primary",children:t.jsx(i,{initData:s})})};export{e as default};
